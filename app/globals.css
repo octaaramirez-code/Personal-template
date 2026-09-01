@@ -1,0 +1,229 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Personal site template. Geist Sans + Geist Mono only.
+   Monochrome, per Vercel design guidance: colour only where it carries meaning.
+   Nothing above weight 500 anywhere on the page.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --bg: #ffffff;
+  --surface: #fafafa;
+  --text: #171717;
+  --gray: #575757;
+  --faint: #757575;
+  --border: #ebebeb;
+  --border-strong: #d4d4d4;
+  --accent: #0070f3;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #000000;
+  --surface: #0a0a0a;
+  --text: #ededed;
+  --gray: #a1a1a1;
+  --faint: #7e7e7e;
+  --border: #1f1f1f;
+  --border-strong: #2e2e2e;
+  --accent: #3291ff;
+  color-scheme: dark;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 200ms var(--ease), color 200ms var(--ease);
+}
+
+::selection { background: var(--text); color: var(--bg); }
+
+a:focus-visible, button:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── Type scale ────────────────────────────────────────────────────────────── */
+
+/* The name. Geist Sans, uppercase, light, open tracking. */
+.name {
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(30px, 5.4vw, 54px);
+  line-height: 1.06;
+}
+
+/* Section headings stay light. Hierarchy comes from position, not weight. */
+.h-section {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.lead {
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--gray);
+}
+
+/* Geist Mono carries structure: indices, labels, numbers, status. */
+.mono {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-feature-settings: 'ss01';
+}
+
+.idx {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.meta {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.tag {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  color: var(--gray);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 3px 8px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .h-section { font-size: 21px; }
+  .lead { font-size: 16.5px; }
+}
+
+/* ── Components ────────────────────────────────────────────────────────────── */
+
+.btn {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 3px;
+  border: 1px solid var(--border-strong);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: border-color 150ms var(--ease), background 150ms var(--ease);
+}
+.btn:hover { border-color: var(--text); }
+
+.btn-solid { background: var(--text); color: var(--bg); border-color: var(--text); }
+.btn-solid:hover { opacity: 0.85; }
+
+.u {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--border-strong);
+  transition: text-decoration-color 150ms var(--ease);
+}
+.u:hover { text-decoration-color: var(--text); }
+
+.dim { color: var(--gray); transition: color 150ms var(--ease); }
+.dim:hover { color: var(--text); }
+
+/* Hairline rule used to separate rows without boxing them in. */
+.rule { border-top: 1px solid var(--border); }
+
+/* ── Motion. Restrained, per design guidance. ─────────────────────────────── */
+
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise 550ms var(--ease) both; }
+
+.reveal { opacity: 0; transform: translateY(10px); transition: opacity 550ms var(--ease), transform 550ms var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  * { transition-duration: 0.01ms !important; }
+}
+
+/* ── Article prose ─────────────────────────────────────────────────────────── */
+
+.h-article { font-weight: 400; font-size: 32px; line-height: 1.2; letter-spacing: -0.015em; }
+
+.prose { font-size: 16px; line-height: 1.75; color: var(--gray); font-weight: 300; }
+.prose > * + * { margin-top: 20px; }
+.prose h2 {
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.4;
+  color: var(--text);
+  margin-top: 38px;
+}
+.prose ul { padding-left: 0; list-style: none; }
+.prose li { position: relative; padding-left: 20px; margin-top: 9px; }
+.prose li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 13px;
+  width: 5px;
+  height: 1px;
+  background: var(--faint);
+}
+.prose blockquote {
+  border-left: 1px solid var(--border-strong);
+  padding-left: 18px;
+  color: var(--text);
+  font-weight: 300;
+}
+
+@media (max-width: 767px) {
+  .h-article { font-size: 26px; }
+  .prose { font-size: 15.5px; }
+}
+
+/* Rows lift their own text on hover instead of growing a box. */
+.row-hover { transition: background 160ms var(--ease), padding-left 160ms var(--ease); }
+.row-hover:hover { background: var(--surface); padding-left: 10px; }
+
+/* Numbered principle, mono counter sitting in the margin. */
+.principle-n {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--faint);
+}
+
+/* Nav link for the section currently in view. */
+.nav-on { color: var(--text); }
+
+@media (prefers-reduced-motion: reduce) {
+  .row-hover:hover { padding-left: 0; }
+}
